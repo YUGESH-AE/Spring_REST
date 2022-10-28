@@ -12,37 +12,38 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController()
+@RequestMapping("/customer")
 public class CustomerController {
 
     @Autowired
     CustomerService customerService;
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,path = "/customer/insert")
-    public ResponseEntity<Customer> insert(@RequestBody Customer customer){
-        Customer customer1=customerService.insert(customer);
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,path = "/insert")
+    public ResponseEntity<Customer> insertCustomer(@RequestBody Customer customer){
+        Customer customer1=customerService.insertCustomer(customer);
         return new ResponseEntity<>(customer1,HttpStatus.OK);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE,path = "/customer/getall")
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE,path = "/getall")
     public ResponseEntity<List<Customer>> getAllCustomer(){
         List<Customer>customerList=customerService.getAllCustomer();
         return new ResponseEntity<>(customerList,HttpStatus.OK);
     }
 
-    @DeleteMapping(path = "customer/delete/")
-    public ResponseEntity<String> delete(@RequestParam("no")Long phoneNo) throws NoSuchCustomer {
-        String response= customerService.delete(phoneNo);
+    @DeleteMapping(path = "/delete/")
+    public ResponseEntity<String> deleteCustomer(@RequestParam("no")Long phoneNo) throws NoSuchCustomer {
+        String response= customerService.deleteCustomer(phoneNo);
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE
-    ,path = "/customer/update")
-    public ResponseEntity<Customer> update(@RequestParam("no")Long phoneNo,@RequestBody Customer customer) throws NoSuchCustomer {
-        Customer cus=customerService.update(phoneNo, customer);
+    ,path = "/update")
+    public ResponseEntity<Customer> updateCustomer(@RequestParam("no")Long phoneNo, @RequestBody Customer customer) throws NoSuchCustomer {
+        Customer cus=customerService.updateCustomer(phoneNo, customer);
         return new ResponseEntity<>(cus,HttpStatus.OK);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE,path = "/customer/geta/{no}")
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE,path = "/geta/{no}")
     public ResponseEntity<Customer> getACustomer(@PathVariable("no") Long phoneNo) throws NoSuchCustomer {
         Customer customer=customerService.getACustomer(phoneNo);
         return new ResponseEntity<>(customer,HttpStatus.OK);

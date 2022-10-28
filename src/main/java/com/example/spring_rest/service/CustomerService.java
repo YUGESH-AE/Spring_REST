@@ -16,12 +16,12 @@ public class CustomerService {
     @Autowired
     CustomerRepository customerRepository;
 
-    public Customer insert(Customer customer){
+    public Customer insertCustomer(Customer customer){
         return customerRepository.saveAndFlush(customer);
 
     }
 
-    public Customer update(Long phoneNo,Customer customer) throws NoSuchCustomer {
+    public Customer updateCustomer(Long phoneNo, Customer customer) throws NoSuchCustomer {
         Optional<Customer>optionalCustomer=customerRepository.findById(phoneNo);
         if(optionalCustomer.isPresent()){
             Customer cust =optionalCustomer.get();
@@ -37,7 +37,7 @@ public class CustomerService {
         }
     }
 
-    public String delete(Long phoneNo) throws NoSuchCustomer {
+    public String deleteCustomer(Long phoneNo) throws NoSuchCustomer {
         Optional<Customer>optionalCustomer=customerRepository.findById(phoneNo);
         if(optionalCustomer.isPresent()){
             customerRepository.deleteById(phoneNo);
